@@ -26,6 +26,8 @@ typedef struct
 } MovieShow;
 
 extern MovieShow movies[MOVIES][SHOWTIMES];
+void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
+void getCustomerMovie();
 
 int ValidateMainMenu(int option);
 //Printing the option menu
@@ -65,17 +67,19 @@ void GetUserInput(){
     switch(UserOption){
 
         case 1:
-            viewShowtimes();
+            viewShowtimes(movies);
+            break;
         case 2:
             getCustomerMovie();
+            break;
         case 3:
-            continue;.
+            break;
         case 4:
-            continue;
+            break;
         case 5:
-            continue;
+            break;
         case 6:
-            continue;
+            break;
         case 7:
             return;
 
@@ -110,32 +114,32 @@ void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
 }
 
 void getCustomerMovie(){
-    int movieChoice();
-    printf("Please select an option: ")
+    int movieChoice = 0;
+    printf("Please select an option: ");
     scanf("%d",&movieChoice);
 
     if(movieChoice>=1 && movieChoice <=10){
         switch(movieChoice){
             case 1:
-                continue;
+                break;
             case 2:
-                continue;
+                break;
             case 3:
-                continue;
+                break;
             case 4:
-                continue;
+                break;
             case 5:
-                continue;
+                break;
             case 6:
-                continue;
+                break;
             case 7:
-                continue;
+                break;
             case 8:
-                continue;
+                break;
             case 9:
-                continue;
+                break;
             case 10:
-                continue;
+                break;
 
         }
     }
@@ -177,6 +181,41 @@ void selectSeat(){
 
 }
 
- //Print options to book,choose seat, cancel a boooking
 
- //Print the seatmap
+
+//printing the seat map
+
+void viewSeatMap(int movieIndex, int showtimeIndex)
+{
+    printf("\n");
+    printf("Movie    : %s\n",movies[movieIndex][showtimeIndex].movieTitle);
+    printf("Showtime : %s\n\n",movies[movieIndex][showtimeIndex].showTime);
+
+    printf("      ");
+    for (int col = 0;col<COLS;col++)
+    {
+        printf("%-6d",col + 1);
+    }
+    printf("\n\n");
+
+    for (int row = 0;row<ROWS;row++)
+    {
+        printf(" %c    ", 'A' + row);
+
+        for (int col = 0;col < COLS; col++)
+        {
+            if (movies[movieIndex][showtimeIndex].seats[row][col].booked)
+            {
+                printf("[X]   ");
+            }
+            else
+            {
+                printf("[.]   ");
+            }
+        }
+
+        printf("\n\n");
+    }
+
+    printf("                [.] = Available   [X] = Booked    \n");
+}

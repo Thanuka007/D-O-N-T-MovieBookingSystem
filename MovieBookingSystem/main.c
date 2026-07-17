@@ -26,11 +26,14 @@ MovieShow movies[MOVIES][SHOWTIMES];
 
 void initializeDataToMoviesArray();
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
+void viewSeatMap(int movieIndex, int showtimeIndex);
 
 
 int main() {
     initializeDataToMoviesArray();
-    viewShowtimes(movies);
+
+
+    viewSeatMap(0,0);
 
     return 0;
 }
