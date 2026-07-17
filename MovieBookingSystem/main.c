@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #define MOVIES 5
 #define SHOWTIMES 2
 #define ROWS 5
@@ -27,13 +26,12 @@ MovieShow movies[MOVIES][SHOWTIMES];
 void initializeDataToMoviesArray();
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
 void viewSeatMap(int movieIndex, int showtimeIndex);
+void bookSeat(char seatRow, int seatColumn,int movieIndex, int showtimeIndex);
+void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeIndex);
 
 
 int main() {
+
     initializeDataToMoviesArray();
-
-
-    viewSeatMap(0,0);
-
     return 0;
 }
