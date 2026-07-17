@@ -1,6 +1,6 @@
 #include <stdio.h>
-
-
+int ValidateMainMenu(int option);
+//Printing the option menu
 void DisplayMenu(){
 
     printf("-----------------------------------\n");
@@ -22,7 +22,19 @@ void DisplayMenu(){
 
 }
 
+//Asking for user input
 
+
+void GetUserInput(){
+    int UserOption= 0;
+
+    do{
+        printf("Please select an option: ");
+        scanf("%d",&UserOption);
+
+    }while(ValidateMainMenu(UserOption));
+
+}
 
 
  // Show the list of all movies
