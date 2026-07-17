@@ -91,7 +91,74 @@ void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
     printf("=====================================================================================\n");
 }
 
+void getCustomerMovie(){
+    int movieChoice();
+    printf("Please select an option: ")
+    scanf("%d",&movieChoice);
 
+    if(movieChoice>=1 && movieChoice <=10){
+        switch(movieChoice){
+            case 1:
+                continue;
+            case 2:
+                continue;
+            case 3:
+                continue;
+            case 4:
+                continue;
+            case 5:
+                continue;
+            case 6:
+                continue;
+            case 7:
+                continue;
+            case 8:
+                continue;
+            case 9:
+                continue;
+            case 10:
+                continue;
+
+        }
+    }
+
+}
+
+
+
+void selectSeat(){
+    //print he seat map
+
+
+    char userName[12];
+    int seatcount;
+
+    printf("Enter your name: ");
+    scanf("%s",&userName);
+
+    printf("How many seats u want to book? ");
+    scanf("%d",&seatcount);
+
+
+
+    for(int i = 0; i <seatcount;i++){
+        char seatRow;
+        char seatCol;
+
+        printf("Select a seat row (A-E): ");
+        scanf(" %c",&seatRow);
+
+        printf("Select a seat column (1-10)");
+        scanf("%d",&seatCol);
+
+        //seat availability should be checked
+
+        //passing to booking function
+    }
+
+
+
+}
 
  //Print options to book,choose seat, cancel a boooking
 
