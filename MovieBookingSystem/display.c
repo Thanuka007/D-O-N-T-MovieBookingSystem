@@ -25,13 +25,14 @@ typedef struct
 
 } MovieShow;
 
-
-
 extern MovieShow movies[MOVIES][SHOWTIMES];
+
+void displayMenu();
+void getUserInput();
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
 void getCustomerMovie();
-void selectSeat();
-void bookSeat(char seatRow, int seatColumn,int movieIndex,int ShowtimeIndex);
+void bookSeatUI(int movieIndex,int ShowtimeIndex);
+float calculateTicketPrice(float basePrice, int totalTickets, int isStudent, int isSenior);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeIndex);
 int ValidateMainMenu(int option);
@@ -40,15 +41,12 @@ void searchByNumber(char seatRow, int seatColumn);
 
 
 //Printing the option menu
-void DisplayMenu(){
-
+void displayMenu(){
     printf("-----------------------------------\n");
     printf("        Lights Camera Book!        \n");
     printf("-----------------------------------\n");
-
     printf("Welcome to the Movie Booking system!\n");
     printf("-----------------------------------\n");
-
     printf("    1. View Showtimes\n");
     printf("    2. View Seat Map\n");
     printf("    3. Book a Seat\n");
@@ -56,14 +54,12 @@ void DisplayMenu(){
     printf("    5. Search Booking\n");
     printf("    6. View Revenue Report\n");
     printf("    7. Exit\n");
-
     printf("-----------------------------------\n\n");
-
 }
 
 
 //Asking for user input
-void GetUserInput(){
+void getUserInput(){
     int UserOption= 0;
 
     do{
@@ -282,37 +278,6 @@ void getCustomerMovie(){
 }
 
 
-//selecting seat
-void selectSeat(){
-
-    char userName[12];
-    int seatcount;
-
-    printf("Enter your name: ");
-    scanf("%s",&userName);
-
-    printf("How many seats u want to book? ");
-    scanf("%d",&seatcount);
-
-
-
-    for(int i = 0; i <seatcount;i++){
-        char seatRow;
-        char seatCol;
-
-        printf("Select a seat row (A-E): ");
-        scanf(" %c",&seatRow);
-
-        printf("Select a seat column (1-10)");
-        scanf("%d",&seatCol);
-
-        //seat availability should be checked
-        //bookSeat()
-    }
-
-
-}
-
 
 //printing the seat map
 void viewSeatMap(int movieIndex, int showtimeIndex)
@@ -352,22 +317,63 @@ void viewSeatMap(int movieIndex, int showtimeIndex)
 
 
 // booking function
-void bookSeat(char seatRow, int seatColumn,int movieIndex, int showtimeIndex)
+void bookSeatUI(int movieIndex, int showtimeIndex)
 {
+    char userName[50];
+    int seatcount = 0;
+    int isStudent = 0;
+    int isSenior = 0;
+    int discountChoice = 0;
 
-    int row = seatRow - 'A';
-    int col = seatColumn - 1;
+    printf("Enter your name: ");
+    scanf("%s", userName);
 
-    if (movies[movieIndex][showtimeIndex].seats[row][col].booked== 1)
-    {
-        printf("\nSeat %c%d is already booked.\n", seatRow, seatColumn);
+    printf("How many seats do you want to book? ");
+    scanf("%d", &seatcount);
+
+    //discount UI
+    printf("\nAre you eligible for a discount?\n");
+    printf("1. No discount\n");
+    printf("2. Student (10%% off)\n");
+    printf("3. Senior Citizen (20%% off)\n");
+    printf("Enter choice (1-3): ");
+    scanf("%d", &discountChoice);
+
+    if (discountChoice == 2) {
+        isStudent = 1;
+    } else if (discountChoice == 3) {
+        isSenior = 1;
     }
-    else
-    {
-        movies[movieIndex][showtimeIndex].seats[row][col].booked = 1;
-        printf("\nSeat %c%d has been booked successfully!\n", seatRow, seatColumn);
+
+    for (int i = 0; i < seatcount; i++) {
+        char seatRow;
+        int seatCol;
+
+        printf("\nSelect a seat row (A-E) for ticket %d: ", i + 1);
+        scanf(" %c", &seatRow);
+
+        printf("Select a seat column (1-10) for ticket %d: ", i + 1);
+        scanf("%d", &seatCol);
+
+        int row = seatRow - 'A';
+        int col = seatCol - 1;
+
+        // Check seat availability
+        if (movies[movieIndex][showtimeIndex].seats[row][col].booked == 1) {
+            printf("Sorry, Seat %c%d is already booked. Please pick another.\n", seatRow, seatCol);
+            i--;
+            continue;
+        }
+
+        float basePrice = movies[movieIndex][showtimeIndex].seats[row][col].seatPrice;
+
+        float finalPrice = calculateTicketPrice(basePrice, seatcount, isStudent, isSenior);
+
+        //struct store to add
+
     }
 }
+
 
 
 //booking canceling function
