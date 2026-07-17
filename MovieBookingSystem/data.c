@@ -1,3 +1,7 @@
+#define MOVIES 5
+#define SHOWTIMES 2
+#define ROWS 6
+#define COLS 10
 
 // Define all the structs
 
@@ -17,15 +21,14 @@
 //VIP (Row 5)        Rs. 1000
 
 
-#define MOVIES 5
-#define SHOWTIMES 2
-#define ROWS 6
-#define COLS 10
+
 
 typedef struct {
     int booked;
     char customerName[50];
+    float seatPrice;
     float pricePaid;
+
 } Seat;
 
 typedef struct
@@ -39,4 +42,8 @@ typedef struct
     int ticketsSold;
 
 } MovieShow;
+
+
+
+
 
