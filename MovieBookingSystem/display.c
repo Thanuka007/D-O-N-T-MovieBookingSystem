@@ -62,6 +62,24 @@ void GetUserInput(){
 
     }while(ValidateMainMenu(UserOption));
 
+    switch(UserOption){
+
+        case 1:
+            viewShowtimes();
+        case 2:
+            getCustomerMovie();
+        case 3:
+            continue;.
+        case 4:
+            continue;
+        case 5:
+            continue;
+        case 6:
+            continue;
+        case 7:
+            return;
+
+    }
 }
 
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
@@ -155,7 +173,6 @@ void selectSeat(){
 
         //passing to booking function
     }
-
 
 
 }
