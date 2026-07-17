@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
+
 #define MOVIES 5
 #define SHOWTIMES 2
 #define ROWS 5
@@ -27,12 +29,15 @@ typedef struct
 
 extern MovieShow movies[MOVIES][SHOWTIMES];
 
-void displayMenu();
-void getUserInput();
+void displayMainMenu();
+void getUserInputFromMainMenu();
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
-void getCustomerMovie();
+void getCustomerMovieToViewSeatMap();
+void getCustomerMovieToBookSeat();
 void bookSeatUI(int movieIndex,int ShowtimeIndex);
 float calculateTicketPrice(float basePrice, int totalTickets, int isStudent, int isSenior);
+void addDataToArray(int movieIndex,int showtimeIndex,int row,int col, char userName[50], float finalPrice);
+bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeIndex);
 int ValidateMainMenu(int option);
@@ -41,7 +46,7 @@ void searchByNumber(char seatRow, int seatColumn);
 
 
 //Printing the option menu
-void displayMenu(){
+void displayMainMenu(){
     printf("-----------------------------------\n");
     printf("        Lights Camera Book!        \n");
     printf("-----------------------------------\n");
@@ -59,7 +64,7 @@ void displayMenu(){
 
 
 //Asking for user input
-void getUserInput(){
+void getUserInputFromMainMenu(){
     int UserOption= 0;
 
     do{
@@ -71,16 +76,15 @@ void getUserInput(){
     switch(UserOption){
 
         case 1:
-            //viewShowtimes(movies);
+            viewShowtimes(movies);
             break;
         case 2:
-            //viewShowtimes(movies);
-            //getCustomerMovie();
+            viewShowtimes(movies);
+            getCustomerMovieToViewSeatMap();
             break;
         case 3:
-            //viewShowtimes(movies);
-            //getCustomerMovie();
-            //bookSeat();
+            viewShowtimes(movies);
+            getCustomerMovieToBookSeat();
             break;
         case 4:
             //Cancel booking()
@@ -207,7 +211,7 @@ void searchByNumber(char seatRow, int seatColumn)
 //Showing the movie details table
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
 {
-    int availableSeats;
+    int availableSeats = 0;
 
     printf("\n=====================================================================================\n");
     printf("%-4s %-30s %-22s %-18s\n", "No.", "Movie Title", "Show Time", "Available Seats");
@@ -233,8 +237,8 @@ void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
 }
 
 
-//asking customers for their preferred movie
-void getCustomerMovie(){
+//asking customers for their preferred movie to view Seat Map
+void getCustomerMovieToViewSeatMap(){
     int movieChoice = 0;
     printf("Please select an option: ");
     scanf("%d",&movieChoice);
@@ -277,7 +281,59 @@ void getCustomerMovie(){
 
 }
 
+//asking customers for their preferred movie to Book Seat
+void getCustomerMovieToBookSeat(){
+    int movieChoice = 0;
+    printf("Please select an option: ");
+    scanf("%d",&movieChoice);
 
+    if(movieChoice>=1 && movieChoice <=10){
+        switch(movieChoice){
+            case 1:
+                viewSeatMap(0,0);
+                bookSeatUI(0,0);
+                break;
+            case 2:
+                viewSeatMap(0,1);
+                bookSeatUI(0,1);
+                break;
+            case 3:
+                viewSeatMap(1,0);
+                bookSeatUI(1,0);
+                break;
+            case 4:
+                viewSeatMap(1,1);
+                bookSeatUI(1,1);
+                break;
+            case 5:
+                viewSeatMap(2,0);
+                bookSeatUI(2,0);
+                break;
+            case 6:
+                viewSeatMap(2,1);
+                bookSeatUI(2,1);
+                break;
+            case 7:
+                viewSeatMap(3,0);
+                bookSeatUI(3,0);
+                break;
+            case 8:
+                viewSeatMap(3,1);
+                bookSeatUI(3,1);
+                break;
+            case 9:
+                viewSeatMap(4,0);
+                bookSeatUI(4,0);
+                break;
+            case 10:
+                viewSeatMap(4,1);
+                bookSeatUI(4,1);
+                break;
+
+        }
+    }
+
+}
 
 //printing the seat map
 void viewSeatMap(int movieIndex, int showtimeIndex)
@@ -359,7 +415,8 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
         int col = seatCol - 1;
 
         // Check seat availability
-        if (movies[movieIndex][showtimeIndex].seats[row][col].booked == 1) {
+        if (isSeatAvailable(movieIndex, showtimeIndex, row, col))
+        {
             printf("Sorry, Seat %c%d is already booked. Please pick another.\n", seatRow, seatCol);
             i--;
             continue;
@@ -369,7 +426,9 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
 
         float finalPrice = calculateTicketPrice(basePrice, seatcount, isStudent, isSenior);
 
-        //struct store to add
+        addDataToArray(movieIndex,showtimeIndex,row,col,userName,finalPrice);
+
+        printf("Seat %c%d booked successfully! Price paid: Rs. %.2f\n", seatRow, seatCol, finalPrice);
 
     }
 }
