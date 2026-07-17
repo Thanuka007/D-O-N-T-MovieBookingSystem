@@ -25,10 +25,12 @@ MovieShow movies[MOVIES][SHOWTIMES];
 
 
 void initializeDataToMoviesArray();
+void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
 
 
 int main() {
-
     initializeDataToMoviesArray();
+    viewShowtimes(movies);
+
     return 0;
 }
