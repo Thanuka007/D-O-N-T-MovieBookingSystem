@@ -27,13 +27,14 @@ MovieShow movies[MOVIES][SHOWTIMES];
 void initializeDataToMoviesArray();
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
 void viewSeatMap(int movieIndex, int showtimeIndex);
+void bookSeat(char seatRow, int seatColumn,int movieIndex, int showtimeIndex);
 
 
 int main() {
     initializeDataToMoviesArray();
 
 
-    viewSeatMap(0,0);
+    bookSeat('A',1,0,0);
 
     return 0;
 }
