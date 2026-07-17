@@ -31,10 +31,7 @@ void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeInd
 
 
 int main() {
+
     initializeDataToMoviesArray();
-
-
-
-
     return 0;
 }

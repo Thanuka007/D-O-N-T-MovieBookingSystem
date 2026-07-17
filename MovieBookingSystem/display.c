@@ -61,6 +61,7 @@ void DisplayMenu(){
 
 }
 
+
 //Asking for user input
 void GetUserInput(){
     int UserOption= 0;
@@ -74,15 +75,15 @@ void GetUserInput(){
     switch(UserOption){
 
         case 1:
-            viewShowtimes(movies);
+            //viewShowtimes(movies);
             break;
         case 2:
-            viewShowtimes(movies);
-            getCustomerMovie();
+            //viewShowtimes(movies);
+            //getCustomerMovie();
             break;
         case 3:
-            viewShowtimes(movies);
-            getCustomerMovie();
+            //viewShowtimes(movies);
+            //getCustomerMovie();
             //bookSeat();
             break;
         case 4:
@@ -92,12 +93,19 @@ void GetUserInput(){
             //searchOption()
             break;
         case 6:
+            //TO-DO later
             break;
         case 7:
+            printf("----------------------------------------\n");
+            printf("        Lights Camera Goodbye!     \n");
+            printf("----------------------------------------\n");
+            printf(" Thanks for choosing our booking system.\n");
+            printf("----------------------------------------\n");
             return;
 
     }
 }
+
 
 //Searching by name or row/col
 void searchOption(){
@@ -127,6 +135,7 @@ void searchOption(){
             break;
     }
 }
+
 
 //search by name
 void searchByName(char name[])
@@ -361,7 +370,7 @@ void bookSeat(char seatRow, int seatColumn,int movieIndex, int showtimeIndex)
 }
 
 
-//booking canceling funtion
+//booking canceling function
 void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeIndex)
 {
     int row = seatRow - 'A';
