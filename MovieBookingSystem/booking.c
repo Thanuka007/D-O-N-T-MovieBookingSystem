@@ -29,7 +29,8 @@ typedef struct
 } MovieShow;
 
 extern MovieShow movies[MOVIES][SHOWTIMES];
-
+void printSearchedBookings(char movieTitle[50], char showTime[20], char customerName[50],
+                           char seatRow,int seatColumn, float pricePaid);
 
 bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col)
 {
@@ -48,6 +49,7 @@ void addDataToArray(int movieIndex,int showtimeIndex,int row,int col, char userN
     movies[movieIndex][showtimeIndex].revenue += finalPrice;
 }
 
+//cancel booking
 void removeDataFromArray(int movieIndex,int showtimeIndex,int row,int col)
 {
 
@@ -59,6 +61,33 @@ void removeDataFromArray(int movieIndex,int showtimeIndex,int row,int col)
     movies[movieIndex][showtimeIndex].seats[row][col].booked = 0;
     strcpy(movies[movieIndex][showtimeIndex].seats[row][col].customerName," ");
     movies[movieIndex][showtimeIndex].seats[row][col].pricePaid = 0.0;
+}
+
+//by name
 
 
+
+//search by number
+int searchByNumber(char seatRow, int seatColumn)
+{
+    int row = seatRow - 'A';
+    int col = seatColumn - 1;
+    int found = 0;
+
+    for (int i = 0; i < MOVIES; i++)
+    {
+        for (int j = 0; j < SHOWTIMES; j++)
+        {
+            if (movies[i][j].seats[row][col].booked)
+            {
+                printSearchedBookings(movies[i][j].movieTitle, movies[i][j].showTime,
+                                      movies[i][j].seats[row][col].customerName,
+                                     seatRow,seatColumn,movies[i][j].seats[row][col].pricePaid);
+
+                found = 1;
+            }
+        }
+    }
+
+    return found;
 }
