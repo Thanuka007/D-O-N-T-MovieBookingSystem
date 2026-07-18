@@ -48,14 +48,17 @@ void addDataToArray(int movieIndex,int showtimeIndex,int row,int col, char userN
     movies[movieIndex][showtimeIndex].revenue += finalPrice;
 }
 
-void removeDataFromArray(int movieIndex,int showtimeIndex,int row,int col,float paidPrice)
+void removeDataFromArray(int movieIndex,int showtimeIndex,int row,int col)
 {
+
+    // Update movie show totals
+    movies[movieIndex][showtimeIndex].ticketsSold--;
+    movies[movieIndex][showtimeIndex].revenue -= movies[movieIndex][showtimeIndex].seats[row][col].pricePaid;
+
     //update seat data
     movies[movieIndex][showtimeIndex].seats[row][col].booked = 0;
     strcpy(movies[movieIndex][showtimeIndex].seats[row][col].customerName," ");
     movies[movieIndex][showtimeIndex].seats[row][col].pricePaid = 0.0;
 
-    // Update movie show totals
-    movies[movieIndex][showtimeIndex].ticketsSold--;
-    movies[movieIndex][showtimeIndex].revenue -= paidPrice;
+
 }
