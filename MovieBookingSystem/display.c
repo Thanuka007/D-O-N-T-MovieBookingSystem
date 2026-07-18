@@ -43,8 +43,9 @@ bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBookingUI(int movieIndex, int showtimeIndex);
 int ValidateMainMenu(int option);
-void searchByName(char name[]);
-void searchByNumber(char seatRow, int seatColumn);
+void searchByNumberUI();
+void searchOption();
+int searchByNumber(char seatRow, int seatColumn);
 
 
 //Printing the option menu
@@ -91,7 +92,7 @@ void getUserInputFromMainMenu(){
                 getCustomerMovieToCancelBooking();
                 break;
             case 5:
-                //searchOption()
+                searchOption();
                 break;
             case 6:
                 //TO-DO later
@@ -105,7 +106,7 @@ void getUserInputFromMainMenu(){
                 return;
 
         }
-    }while(1);
+    }while(0);
 }
 
 
@@ -121,7 +122,7 @@ void searchOption(){
 
     printf("Enter your choice: ");
     scanf("%d",&userChoice);
-    //Validate the user choice
+    //needs to Validate the user choice
 
 
     //implementing a switch based on user choice
@@ -130,7 +131,7 @@ void searchOption(){
             //searchByName();
             break;
         case 2:
-            //searchByNumber();
+            searchByNumberUI();
             break;
         default:
             printf("Invalid Input\n");
@@ -139,75 +140,34 @@ void searchOption(){
 }
 
 
+void searchByNumberUI()
+{
+    char seatRow;
+    int seatCol;
+
+    printf("\n seat row (A-E) : ");
+    scanf(" %c", &seatRow);
+
+    printf("seat column (1-10): ");
+    scanf("%d", &seatCol);
+
+    if(!searchByNumber(seatRow,seatCol))
+    {
+        printf("No booking found for Seat %c%d",seatRow, seatCol);
+    }
+
+}
+void printSearchedBookings(char movieTitle[50], char showTime[20], char customerName[50],
+                           char seatRow,int seatColumn, float pricePaid)
+{
+    printf("Movie     : %s\n", movieTitle );
+    printf("Showtime  : %s\n", showTime);
+    printf("Customer  : %s\n", customerName);
+    printf("Seat      : %c%d\n", seatRow, seatColumn);
+    printf("Price Paid: Rs. %.2f\n\n", pricePaid);
+}
 //search by name
-void searchByName(char name[])
-{
-    int found = 0;
 
-    for (int i = 0; i < MOVIES; i++)
-    {
-        for (int j = 0; j < SHOWTIMES; j++)
-        {
-            for (int row = 0; row < ROWS; row++)
-            {
-                for (int col = 0; col < COLS; col++)
-                {
-                    Seat seat = movies[i][j].seats[row][col];
-
-                    if (seat.booked && strcmp(seat.customerName, name) == 0)
-                    {
-                        printf("\nBooking Found!\n");
-                        printf("Movie     : %s\n", movies[i][j].movieTitle);
-                        printf("Showtime  : %s\n", movies[i][j].showTime);
-                        printf("Seat      : %c%d\n", 'A' + row, col + 1);
-                        printf("Price Paid: Rs. %.2f\n", seat.pricePaid);
-
-                        found = 1;
-                    }
-                }
-            }
-        }
-    }
-
-    if (!found)
-    {
-        printf("No booking found for %s.\n",name);
-    }
-}
-
-
-//search by number
-void searchByNumber(char seatRow, int seatColumn)
-{
-    int row = seatRow - 'A';
-    int col = seatColumn - 1;
-    int found = 0;
-
-    for (int i = 0; i < MOVIES; i++)
-    {
-        for (int j = 0; j < SHOWTIMES; j++)
-        {
-            if (movies[i][j].seats[row][col].booked)
-            {
-                Seat seat = movies[i][j].seats[row][col];
-
-                printf("\nBooking Found!\n");
-                printf("Movie     : %s\n", movies[i][j].movieTitle);
-                printf("Showtime  : %s\n", movies[i][j].showTime);
-                printf("Customer  : %s\n", seat.customerName);
-                printf("Seat      : %c%d\n", seatRow, seatColumn);
-                printf("Price Paid: Rs. %.2f\n", seat.pricePaid);
-
-                found = 1;
-            }
-        }
-    }
-
-    if (!found)
-    {
-        printf("Seat %c%d is not booked.\n", seatRow, seatColumn);
-    }
-}
 
 
 //Showing the movie details table
