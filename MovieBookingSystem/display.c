@@ -43,9 +43,11 @@ bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBookingUI(int movieIndex, int showtimeIndex);
 int ValidateMainMenu(int option);
-void searchByName(char name[]);
-void searchByNumber(char seatRow, int seatColumn);
-
+void searchByNumberUI();
+void searchByNameUI();
+void searchOption();
+int searchByNumber(char seatRow, int seatColumn);
+int searchByName(char searchName[]);
 
 //Printing the option menu
 void displayMainMenu(){
@@ -91,7 +93,7 @@ void getUserInputFromMainMenu(){
                 getCustomerMovieToCancelBooking();
                 break;
             case 5:
-                //searchOption()
+                searchOption();
                 break;
             case 6:
                 //TO-DO later
@@ -105,7 +107,7 @@ void getUserInputFromMainMenu(){
                 return;
 
         }
-    }while(1);
+    }while(0);
 }
 
 
@@ -121,16 +123,16 @@ void searchOption(){
 
     printf("Enter your choice: ");
     scanf("%d",&userChoice);
-    //Validate the user choice
+    //needs to Validate the user choice
 
 
     //implementing a switch based on user choice
     switch(userChoice){
         case 1:
-            //searchByName();
+            searchByNameUI();
             break;
         case 2:
-            //searchByNumber();
+            searchByNumberUI();
             break;
         default:
             printf("Invalid Input\n");
@@ -138,77 +140,45 @@ void searchOption(){
     }
 }
 
-
-//search by name
-void searchByName(char name[])
+void searchByNameUI()
 {
-    int found = 0;
+    char searchName[50];
 
-    for (int i = 0; i < MOVIES; i++)
+    printf("\nEnter customer name to search: ");
+    scanf(" %49[^\n]", searchName);
+
+    if(!searchByName(searchName))
     {
-        for (int j = 0; j < SHOWTIMES; j++)
-        {
-            for (int row = 0; row < ROWS; row++)
-            {
-                for (int col = 0; col < COLS; col++)
-                {
-                    Seat seat = movies[i][j].seats[row][col];
-
-                    if (seat.booked && strcmp(seat.customerName, name) == 0)
-                    {
-                        printf("\nBooking Found!\n");
-                        printf("Movie     : %s\n", movies[i][j].movieTitle);
-                        printf("Showtime  : %s\n", movies[i][j].showTime);
-                        printf("Seat      : %c%d\n", 'A' + row, col + 1);
-                        printf("Price Paid: Rs. %.2f\n", seat.pricePaid);
-
-                        found = 1;
-                    }
-                }
-            }
-        }
-    }
-
-    if (!found)
-    {
-        printf("No booking found for %s.\n",name);
+        printf("No booking found for %s\n",searchName);
     }
 }
 
-
-//search by number
-void searchByNumber(char seatRow, int seatColumn)
+void searchByNumberUI()
 {
-    int row = seatRow - 'A';
-    int col = seatColumn - 1;
-    int found = 0;
+    char seatRow;
+    int seatCol;
 
-    for (int i = 0; i < MOVIES; i++)
+    printf("\n seat row (A-E) : ");
+    scanf(" %c", &seatRow);
+
+    printf("seat column (1-10): ");
+    scanf("%d", &seatCol);
+
+    if(!searchByNumber(seatRow,seatCol))
     {
-        for (int j = 0; j < SHOWTIMES; j++)
-        {
-            if (movies[i][j].seats[row][col].booked)
-            {
-                Seat seat = movies[i][j].seats[row][col];
-
-                printf("\nBooking Found!\n");
-                printf("Movie     : %s\n", movies[i][j].movieTitle);
-                printf("Showtime  : %s\n", movies[i][j].showTime);
-                printf("Customer  : %s\n", seat.customerName);
-                printf("Seat      : %c%d\n", seatRow, seatColumn);
-                printf("Price Paid: Rs. %.2f\n", seat.pricePaid);
-
-                found = 1;
-            }
-        }
+        printf("No booking found for Seat %c%d\n",seatRow, seatCol);
     }
 
-    if (!found)
-    {
-        printf("Seat %c%d is not booked.\n", seatRow, seatColumn);
-    }
 }
-
+void printSearchedBookings(char movieTitle[50], char showTime[20], char customerName[50],
+                           char seatRow,int seatColumn, float pricePaid)
+{
+    printf("Movie     : %s\n", movieTitle );
+    printf("Showtime  : %s\n", showTime);
+    printf("Customer  : %s\n", customerName);
+    printf("Seat      : %c%d\n", seatRow, seatColumn);
+    printf("Price Paid: Rs. %.2f\n\n", pricePaid);
+}
 
 //Showing the movie details table
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
@@ -438,7 +408,7 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
     int discountChoice = 0;
 
     printf("Enter your name: ");
-    scanf("%s", userName);
+    scanf(" %49[^\n]", userName);
 
     printf("How many seats do you want to book? ");
     scanf("%d", &seatcount);

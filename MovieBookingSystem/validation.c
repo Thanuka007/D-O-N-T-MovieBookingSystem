@@ -1,13 +1,11 @@
 #include <stdio.h>
 
+
+//needs editing
 //Validating The Main menu options
 
 int ValidateMainMenu(int option){
-    if (option<1 || option>7){
-        printf("Invalid Menu option.Enter a Valid option\n");
-        return 1;
-    }
-    return 0;
+    return 1;
 }
 //Handling invalid  user inputs when choosing a movie
 
