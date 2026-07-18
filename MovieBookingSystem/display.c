@@ -44,9 +44,10 @@ void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBookingUI(int movieIndex, int showtimeIndex);
 int ValidateMainMenu(int option);
 void searchByNumberUI();
+void searchByNameUI();
 void searchOption();
 int searchByNumber(char seatRow, int seatColumn);
-
+int searchByName(char searchName[]);
 
 //Printing the option menu
 void displayMainMenu(){
@@ -128,7 +129,7 @@ void searchOption(){
     //implementing a switch based on user choice
     switch(userChoice){
         case 1:
-            //searchByName();
+            searchByNameUI();
             break;
         case 2:
             searchByNumberUI();
@@ -139,6 +140,18 @@ void searchOption(){
     }
 }
 
+void searchByNameUI()
+{
+    char searchName[50];
+
+    printf("\nEnter customer name to search: ");
+    scanf(" %49[^\n]", searchName);
+
+    if(!searchByName(searchName))
+    {
+        printf("No booking found for %s\n",searchName);
+    }
+}
 
 void searchByNumberUI()
 {
@@ -153,7 +166,7 @@ void searchByNumberUI()
 
     if(!searchByNumber(seatRow,seatCol))
     {
-        printf("No booking found for Seat %c%d",seatRow, seatCol);
+        printf("No booking found for Seat %c%d\n",seatRow, seatCol);
     }
 
 }
@@ -166,9 +179,6 @@ void printSearchedBookings(char movieTitle[50], char showTime[20], char customer
     printf("Seat      : %c%d\n", seatRow, seatColumn);
     printf("Price Paid: Rs. %.2f\n\n", pricePaid);
 }
-//search by name
-
-
 
 //Showing the movie details table
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
@@ -398,7 +408,7 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
     int discountChoice = 0;
 
     printf("Enter your name: ");
-    scanf("%s", userName);
+    scanf(" %49[^\n]", userName);
 
     printf("How many seats do you want to book? ");
     scanf("%d", &seatcount);
