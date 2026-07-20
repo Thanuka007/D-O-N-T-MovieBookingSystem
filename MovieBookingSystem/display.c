@@ -73,12 +73,23 @@ void getUserInputFromMainMenu(){
     int UserOption= 0;
 
     do{
-        printf("Please select an option: ");
-        if (scanf("%d",&UserOption) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 7.\n");
-            while (getchar()!='\n');
-            return;
-        }
+        do
+        {
+            printf("Please select an option (1-7): ");
+
+            if(scanf("%d",&UserOption)!=1)
+            {
+                printf("Invalid input! Enter a number (1-7).\n");
+                while(getchar()!='\n');
+                UserOption=0;
+            }
+            else if(UserOption<1 || UserOption>7)
+            {
+                printf("Please enter a number between 1 and 7.\n");
+            }
+
+        }while(UserOption<1 || UserOption>7);
+
 
         switch(UserOption){
 
