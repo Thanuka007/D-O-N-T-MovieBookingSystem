@@ -236,12 +236,23 @@ void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
 //asking customers for their preferred movie to view Seat Map
 void getCustomerMovieToViewSeatMap(){
     int movieChoice = 0;
-    printf("Please select an option: ");
-    if (scanf("%d",&movieChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+
+    do
+    {
+        printf("Please select a show (1-10): ");
+
+        if(scanf("%d",&movieChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            movieChoice=0;
         }
+        else if(movieChoice<1 || movieChoice>10)
+        {
+            printf("Please enter a number between 1 and 10.\n");
+        }
+
+    }while(movieChoice<1 || movieChoice>10);
 
     if(movieChoice>=1 && movieChoice <=10){
         switch(movieChoice){
@@ -284,12 +295,23 @@ void getCustomerMovieToViewSeatMap(){
 //asking customers for their preferred movie to Book Seat
 void getCustomerMovieToBookSeat(){
     int movieChoice = 0;
-    printf("Please select an option: ");
-    if (scanf("%d",&movieChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("Please select a show (1-10): ");
+
+        if(scanf("%d",&movieChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            movieChoice=0;
         }
+        else if(movieChoice<1 || movieChoice>10)
+        {
+            printf("Please enter a number between 1 and 10.\n");
+        }
+
+    }while(movieChoice<1 || movieChoice>10);
+
 
     if(movieChoice>=1 && movieChoice <=10){
         switch(movieChoice){
@@ -341,12 +363,23 @@ void getCustomerMovieToBookSeat(){
 
 void getCustomerMovieToCancelBooking(){
     int movieChoice = 0;
-    printf("Please select the Showtime: ");
-    if (scanf("%d",&movieChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("Please select a show (1-10): ");
+
+        if(scanf("%d",&movieChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            movieChoice=0;
         }
+        else if(movieChoice<1 || movieChoice>10)
+        {
+            printf("Please enter a number between 1 and 10.\n");
+        }
+
+    }while(movieChoice<1 || movieChoice>10);
+
 
     if(movieChoice>=1 && movieChoice <=10){
         switch(movieChoice){
