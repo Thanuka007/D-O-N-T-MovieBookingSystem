@@ -489,24 +489,45 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
     printf("Enter your name: ");
     scanf(" %49[^\n]", userName);
 
-    printf("How many seats do you want to book? ");
-    if (scanf("%d",&seatcount) !=1){
-            printf("Invalid Input . Please enter a number.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("How many seats do you want to book?");
+
+        if(scanf("%d",&seatcount)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            seatcount=0;
+        }
+        else if(seatcount<1)
+        {
+            printf("You must book at least one seat.\n");
         }
 
+    }while(seatcount<1);
+
     //discount UI
+
+    do
+    {
     printf("\nAre you eligible for a discount?\n");
     printf("1. No discount\n");
     printf("2. Student (10%% off)\n");
     printf("3. Senior Citizen (20%% off)\n");
     printf("Enter choice (1-3): ");
-    if (scanf("%d",&discountChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 3.\n");
-            while (getchar()!='\n');
-            return;
+
+        if(scanf("%d",&discountChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            discountChoice=0;
         }
+        else if(discountChoice<1 || discountChoice>3)
+        {
+            printf("Please enter 1-3.\n");
+        }
+
+    }while(discountChoice<1 || discountChoice>3);
 
     if (discountChoice == 2) {
         isStudent = 1;
