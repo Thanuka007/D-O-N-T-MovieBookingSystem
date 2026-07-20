@@ -137,12 +137,22 @@ void searchOption(){
     printf("    2. Search by Seat Number\n");
     printf("------------------------------------\n");
 
-    printf("Enter your choice: ");
-    if (scanf("%d",&userChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 2.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("Enter your choice (1-2): ");
+
+        if(scanf("%d",&userChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            userChoice=0;
         }
+        else if(userChoice<1 || userChoice>2)
+        {
+            printf("Enter 1 or 2 only.\n");
+        }
+
+    }while(userChoice<1 || userChoice>2);
     //needs to Validate the user choice
 
 
