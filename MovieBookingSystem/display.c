@@ -539,21 +539,37 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
         char seatRow;
         int seatCol;
 
-        printf("\nSelect a seat row (A-E) for ticket %d: ", i + 1);
-        scanf(" %c", &seatRow);
 
-        printf("Select a seat column (1-10) for ticket %d: ", i + 1);
-        if (scanf("%d",&seatCol) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
-        }
-
-        if (!validSeat(seatRow, seatCol))
+        do
         {
-            i--;
-            continue;
-        }
+            printf("\nSelect a seat row (A-E) for ticket %d: ", i + 1);
+            scanf(" %c",&seatRow);
+
+            if(seatRow>='a' && seatRow<='e')
+                seatRow -= 32;
+
+            if(seatRow<'A' || seatRow>'E')
+                printf("Invalid row! Choose A-E.\n");
+
+        }while(seatRow<'A' || seatRow>'E');
+
+
+        do
+        {
+            printf("Select a seat column (1-10) for ticket %d: ", i + 1);
+            if(scanf("%d",&seatCol)!=1)
+            {
+                printf("Invalid input!\n");
+                while(getchar()!='\n');
+                seatCol=0;
+            }
+            else if(seatCol<1 || seatCol>10)
+            {
+                printf("Column should be between 1 and 10.\n");
+            }
+
+        }while(seatCol<1 || seatCol>10);
+
 
         int row = seatRow - 'A';
         int col = seatCol - 1;
@@ -585,16 +601,36 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
 {
     char seatRow;
     int seatCol;
+    do
+    {
+        printf("\nSelect a seat row (A-E) of the ticket ");
+        scanf(" %c",&seatRow);
 
-    printf("\nSelect the seat row (A-E) of the ticket : ");
-    scanf(" %c", &seatRow);
+        if(seatRow>='a' && seatRow<='e')
+            seatRow -= 32;
+        if(seatRow<'A' || seatRow>'E')
+            printf("Invalid row! Choose A-E.\n");
 
-    printf("Select the seat column (1-10) of the ticket : ");
-    if (scanf("%d",&seatCol) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+    }while(seatRow<'A' || seatRow>'E');
+
+
+    do
+    {
+        printf("Select a seat column (1-10) of the ticket ");
+        if(scanf("%d",&seatCol)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            seatCol=0;
         }
+        else if(seatCol<1 || seatCol>10)
+        {
+            printf("Column should be between 1 and 10.\n");
+        }
+
+    }while(seatCol<1 || seatCol>10);
+
+
     if (!validSeat(seatRow, seatCol))
     {
             int row = seatRow - 'A';
