@@ -188,15 +188,35 @@ void searchByNumberUI()
     char seatRow;
     int seatCol;
 
-    printf("\n seat row (A-E) : ");
-    scanf(" %c", &seatRow);
+    do
+    {
+        printf("\nSelect a seat row (A-E) of the ticket ");
+        scanf(" %c",&seatRow);
 
-    printf("seat column (1-10): ");
-    if (scanf("%d",&seatCol) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+        if(seatRow>='a' && seatRow<='e')
+            seatRow -= 32;
+        if(seatRow<'A' || seatRow>'E')
+            printf("Invalid row! Choose A-E.\n");
+
+    }while(seatRow<'A' || seatRow>'E');
+
+
+    do
+    {
+        printf("Select a seat column (1-10) of the ticket ");
+        if(scanf("%d",&seatCol)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            seatCol=0;
         }
+        else if(seatCol<1 || seatCol>10)
+        {
+            printf("Column should be between 1 and 10.\n");
+        }
+
+    }while(seatCol<1 || seatCol>10);
+
 
     if(!searchByNumber(seatRow,seatCol))
     {
@@ -492,7 +512,7 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
     do
     {
         printf("How many seats do you want to book?");
-
+        //need to check seat avilability from backend.
         if(scanf("%d",&seatcount)!=1)
         {
             printf("Invalid input!\n");
