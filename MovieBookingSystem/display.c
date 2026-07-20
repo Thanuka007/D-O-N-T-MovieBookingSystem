@@ -48,6 +48,7 @@ void searchByNameUI();
 void searchOption();
 int searchByNumber(char seatRow, int seatColumn);
 int searchByName(char searchName[]);
+bool validSeat(char seatRow,int seatCol);
 
 //Printing the option menu
 void displayMainMenu(){
@@ -473,8 +474,15 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
             return;
         }
 
+        if (!validSeat(seatRow, seatCol))
+        {
+            i--;
+            continue;
+        }
+
         int row = seatRow - 'A';
         int col = seatCol - 1;
+
 
         // Check seat availability
         if (isSeatAvailable(movieIndex, showtimeIndex, row, col))
@@ -512,8 +520,9 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
             while (getchar()!='\n');
             return;
         }
-
-    int row = seatRow - 'A';
+    if (!validSeat(seatRow, seatCol))
+    {
+            int row = seatRow - 'A';
     int col = seatCol - 1;
 
 
@@ -527,6 +536,8 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
 
         printf("\nBooking for seat %c%d has been cancelled successfully!\n",seatRow, seatCol);
     }
+    }
+
 }
 
 
