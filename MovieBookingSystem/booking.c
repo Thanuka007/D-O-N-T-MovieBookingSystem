@@ -60,7 +60,7 @@ void removeDataFromArray(int movieIndex,int showtimeIndex,int row,int col)
 
     //update seat data
     movies[movieIndex][showtimeIndex].seats[row][col].booked = 0;
-    strcpy(movies[movieIndex][showtimeIndex].seats[row][col].customerName," ");
+    strcpy(movies[movieIndex][showtimeIndex].seats[row][col].customerName,"");
     movies[movieIndex][showtimeIndex].seats[row][col].pricePaid = 0.0;
 }
 

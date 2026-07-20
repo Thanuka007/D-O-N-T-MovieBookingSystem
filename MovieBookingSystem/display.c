@@ -73,12 +73,23 @@ void getUserInputFromMainMenu(){
     int UserOption= 0;
 
     do{
-        printf("Please select an option: ");
-        if (scanf("%d",&UserOption) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 7.\n");
-            while (getchar()!='\n');
-            return;
-        }
+        do
+        {
+            printf("Please select an option (1-7): ");
+
+            if(scanf("%d",&UserOption)!=1)
+            {
+                printf("Invalid input! Enter a number (1-7).\n");
+                while(getchar()!='\n');
+                UserOption=0;
+            }
+            else if(UserOption<1 || UserOption>7)
+            {
+                printf("Please enter a number between 1 and 7.\n");
+            }
+
+        }while(UserOption<1 || UserOption>7);
+
 
         switch(UserOption){
 
@@ -126,12 +137,22 @@ void searchOption(){
     printf("    2. Search by Seat Number\n");
     printf("------------------------------------\n");
 
-    printf("Enter your choice: ");
-    if (scanf("%d",&userChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 2.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("Enter your choice (1-2): ");
+
+        if(scanf("%d",&userChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            userChoice=0;
         }
+        else if(userChoice<1 || userChoice>2)
+        {
+            printf("Enter 1 or 2 only.\n");
+        }
+
+    }while(userChoice<1 || userChoice>2);
     //needs to Validate the user choice
 
 
@@ -167,15 +188,35 @@ void searchByNumberUI()
     char seatRow;
     int seatCol;
 
-    printf("\n seat row (A-E) : ");
-    scanf(" %c", &seatRow);
+    do
+    {
+        printf("\nSelect a seat row (A-E) of the ticket ");
+        scanf(" %c",&seatRow);
 
-    printf("seat column (1-10): ");
-    if (scanf("%d",&seatCol) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+        if(seatRow>='a' && seatRow<='e')
+            seatRow -= 32;
+        if(seatRow<'A' || seatRow>'E')
+            printf("Invalid row! Choose A-E.\n");
+
+    }while(seatRow<'A' || seatRow>'E');
+
+
+    do
+    {
+        printf("Select a seat column (1-10) of the ticket ");
+        if(scanf("%d",&seatCol)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            seatCol=0;
         }
+        else if(seatCol<1 || seatCol>10)
+        {
+            printf("Column should be between 1 and 10.\n");
+        }
+
+    }while(seatCol<1 || seatCol>10);
+
 
     if(!searchByNumber(seatRow,seatCol))
     {
@@ -225,12 +266,23 @@ void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES])
 //asking customers for their preferred movie to view Seat Map
 void getCustomerMovieToViewSeatMap(){
     int movieChoice = 0;
-    printf("Please select an option: ");
-    if (scanf("%d",&movieChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+
+    do
+    {
+        printf("Please select a show (1-10): ");
+
+        if(scanf("%d",&movieChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            movieChoice=0;
         }
+        else if(movieChoice<1 || movieChoice>10)
+        {
+            printf("Please enter a number between 1 and 10.\n");
+        }
+
+    }while(movieChoice<1 || movieChoice>10);
 
     if(movieChoice>=1 && movieChoice <=10){
         switch(movieChoice){
@@ -273,12 +325,23 @@ void getCustomerMovieToViewSeatMap(){
 //asking customers for their preferred movie to Book Seat
 void getCustomerMovieToBookSeat(){
     int movieChoice = 0;
-    printf("Please select an option: ");
-    if (scanf("%d",&movieChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("Please select a show (1-10): ");
+
+        if(scanf("%d",&movieChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            movieChoice=0;
         }
+        else if(movieChoice<1 || movieChoice>10)
+        {
+            printf("Please enter a number between 1 and 10.\n");
+        }
+
+    }while(movieChoice<1 || movieChoice>10);
+
 
     if(movieChoice>=1 && movieChoice <=10){
         switch(movieChoice){
@@ -330,12 +393,23 @@ void getCustomerMovieToBookSeat(){
 
 void getCustomerMovieToCancelBooking(){
     int movieChoice = 0;
-    printf("Please select the Showtime: ");
-    if (scanf("%d",&movieChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("Please select a show (1-10): ");
+
+        if(scanf("%d",&movieChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            movieChoice=0;
         }
+        else if(movieChoice<1 || movieChoice>10)
+        {
+            printf("Please enter a number between 1 and 10.\n");
+        }
+
+    }while(movieChoice<1 || movieChoice>10);
+
 
     if(movieChoice>=1 && movieChoice <=10){
         switch(movieChoice){
@@ -435,24 +509,45 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
     printf("Enter your name: ");
     scanf(" %49[^\n]", userName);
 
-    printf("How many seats do you want to book? ");
-    if (scanf("%d",&seatcount) !=1){
-            printf("Invalid Input . Please enter a number.\n");
-            while (getchar()!='\n');
-            return;
+    do
+    {
+        printf("How many seats do you want to book?");
+        //need to check seat avilability from backend.
+        if(scanf("%d",&seatcount)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            seatcount=0;
+        }
+        else if(seatcount<1)
+        {
+            printf("You must book at least one seat.\n");
         }
 
+    }while(seatcount<1);
+
     //discount UI
+
+    do
+    {
     printf("\nAre you eligible for a discount?\n");
     printf("1. No discount\n");
     printf("2. Student (10%% off)\n");
     printf("3. Senior Citizen (20%% off)\n");
     printf("Enter choice (1-3): ");
-    if (scanf("%d",&discountChoice) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 3.\n");
-            while (getchar()!='\n');
-            return;
+
+        if(scanf("%d",&discountChoice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            discountChoice=0;
         }
+        else if(discountChoice<1 || discountChoice>3)
+        {
+            printf("Please enter 1-3.\n");
+        }
+
+    }while(discountChoice<1 || discountChoice>3);
 
     if (discountChoice == 2) {
         isStudent = 1;
@@ -464,21 +559,37 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
         char seatRow;
         int seatCol;
 
-        printf("\nSelect a seat row (A-E) for ticket %d: ", i + 1);
-        scanf(" %c", &seatRow);
 
-        printf("Select a seat column (1-10) for ticket %d: ", i + 1);
-        if (scanf("%d",&seatCol) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
-        }
-
-        if (!validSeat(seatRow, seatCol))
+        do
         {
-            i--;
-            continue;
-        }
+            printf("\nSelect a seat row (A-E) for ticket %d: ", i + 1);
+            scanf(" %c",&seatRow);
+
+            if(seatRow>='a' && seatRow<='e')
+                seatRow -= 32;
+
+            if(seatRow<'A' || seatRow>'E')
+                printf("Invalid row! Choose A-E.\n");
+
+        }while(seatRow<'A' || seatRow>'E');
+
+
+        do
+        {
+            printf("Select a seat column (1-10) for ticket %d: ", i + 1);
+            if(scanf("%d",&seatCol)!=1)
+            {
+                printf("Invalid input!\n");
+                while(getchar()!='\n');
+                seatCol=0;
+            }
+            else if(seatCol<1 || seatCol>10)
+            {
+                printf("Column should be between 1 and 10.\n");
+            }
+
+        }while(seatCol<1 || seatCol>10);
+
 
         int row = seatRow - 'A';
         int col = seatCol - 1;
@@ -510,16 +621,36 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
 {
     char seatRow;
     int seatCol;
+    do
+    {
+        printf("\nSelect a seat row (A-E) of the ticket ");
+        scanf(" %c",&seatRow);
 
-    printf("\nSelect the seat row (A-E) of the ticket : ");
-    scanf(" %c", &seatRow);
+        if(seatRow>='a' && seatRow<='e')
+            seatRow -= 32;
+        if(seatRow<'A' || seatRow>'E')
+            printf("Invalid row! Choose A-E.\n");
 
-    printf("Select the seat column (1-10) of the ticket : ");
-    if (scanf("%d",&seatCol) !=1){
-            printf("Invalid Input . Please enter a number between 1 and 10.\n");
-            while (getchar()!='\n');
-            return;
+    }while(seatRow<'A' || seatRow>'E');
+
+
+    do
+    {
+        printf("Select a seat column (1-10) of the ticket ");
+        if(scanf("%d",&seatCol)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            seatCol=0;
         }
+        else if(seatCol<1 || seatCol>10)
+        {
+            printf("Column should be between 1 and 10.\n");
+        }
+
+    }while(seatCol<1 || seatCol>10);
+
+
     if (!validSeat(seatRow, seatCol))
     {
             int row = seatRow - 'A';
