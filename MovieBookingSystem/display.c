@@ -112,7 +112,7 @@ void getUserInputFromMainMenu(){
                 return;
 
         }
-    }while(0);
+    }while(UserOption !=7);
 }
 
 

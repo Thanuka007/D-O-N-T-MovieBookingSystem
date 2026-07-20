@@ -31,15 +31,13 @@ void getUserInputFromMainMenu();
 int main() {
 
     initializeDataToMoviesArray();
-    displayMainMenu();
-    getUserInputFromMainMenu();
-    displayMainMenu();
-    getUserInputFromMainMenu();
-    displayMainMenu();
-    getUserInputFromMainMenu();
-    displayMainMenu();
-    getUserInputFromMainMenu();
-    displayMainMenu();
-    getUserInputFromMainMenu();
+
+    while(1){
+
+        displayMainMenu();
+        getUserInputFromMainMenu();
+    }
+
+
     return 0;
 }
