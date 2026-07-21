@@ -535,25 +535,40 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
     int isSenior = 0;
     int discountChoice = 0;
 
+    int availableSeats = (ROWS * COLS) - movies[movieIndex][showtimeIndex].ticketsSold;
+
+    if (availableSeats == 0)
+    {
+        printf("\nSorry! This show is fully booked.\n");
+        return;
+    }
+
     printf("Enter your name: ");
     scanf(" %49[^\n]", userName);
 
+
     do
     {
-        printf("How many seats do you want to book?");
-        //need to check seat avilability from backend.
+
+        printf("How many seats do you want to book (%d Seats Available) ? ",availableSeats);
+
         if(scanf("%d",&seatcount)!=1)
         {
             printf("Invalid input!\n");
             while(getchar()!='\n');
-            seatcount=0;
+            seatcount = 0;
         }
-        else if(seatcount<1)
+        else if(seatcount < 1)
         {
             printf("You must book at least one seat.\n");
         }
+        else if(seatcount > availableSeats)
+        {
+            printf("Only %d seat(s) are available for this show.\n", availableSeats);
+            seatcount = 0;
+        }
 
-    }while(seatcount<1);
+    } while(seatcount < 1);
 
     //discount UI
 
