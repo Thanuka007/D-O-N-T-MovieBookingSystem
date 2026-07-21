@@ -24,14 +24,20 @@ MovieShow movies[MOVIES][SHOWTIMES];
 
 
 void initializeDataToMoviesArray();
-void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
-void viewSeatMap(int movieIndex, int showtimeIndex);
-void bookSeat(char seatRow, int seatColumn,int movieIndex, int showtimeIndex);
-void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeIndex);
+void displayMainMenu();
+void getUserInputFromMainMenu();
 
 
 int main() {
 
     initializeDataToMoviesArray();
+
+    while(1){
+
+        displayMainMenu();
+        getUserInputFromMainMenu();
+    }
+
+
     return 0;
 }
