@@ -31,7 +31,7 @@ typedef struct
 extern MovieShow movies[MOVIES][SHOWTIMES];
 
 void displayMainMenu();
-void getUserInputFromMainMenu();
+int getUserInputFromMainMenu();
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
 void getCustomerMovieToViewSeatMap();
 void getCustomerMovieToBookSeat();
@@ -53,6 +53,7 @@ int searchByName(char searchName[]);
 bool validSeat(char seatRow,int seatCol);
 void exitProgram();
 void viewRevenueReport();
+int PostActionMenu();
 
 
 //Printing the option menu
@@ -74,7 +75,7 @@ void displayMainMenu(){
 
 
 //Asking for user input
-void getUserInputFromMainMenu(){
+int getUserInputFromMainMenu(){
     int UserOption= 0;
 
     do{
@@ -120,8 +121,9 @@ void getUserInputFromMainMenu(){
             case 7:
                 clearScreen();
                 exitProgram();
-
+                return 0;
         }
+        return PostActionMenu();
     }while(UserOption !=7);
 }
 
@@ -726,4 +728,29 @@ void exitProgram()
     printf("----------------------------------------\n");
 
     exit(0);
+}
+
+
+//Post action menu
+int PostActionMenu()
+{
+    int choice;
+
+    do
+    {
+        printf("\n-----------------------------------\n");
+        printf("    1. Back to Main Menu\n");
+        printf("    2. Exit\n");
+        printf("-----------------------------------\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice != 1 && choice != 2)
+        {
+            printf("Invalid input. Please enter 1 or 2.\n");
+        }
+
+    } while (choice != 1 && choice != 2);
+
+    return (choice == 1) ? 1 : 0;
 }

@@ -25,7 +25,8 @@ MovieShow movies[MOVIES][SHOWTIMES];
 
 void initializeDataToMoviesArray();
 void displayMainMenu();
-void getUserInputFromMainMenu();
+int getUserInputFromMainMenu();
+int PostActionMenu();
 
 
 int main() {
