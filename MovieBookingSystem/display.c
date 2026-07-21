@@ -76,9 +76,11 @@ void displayMainMenu(){
 
 //Asking for user input
 int getUserInputFromMainMenu(){
+
     int UserOption= 0;
 
     do{
+            displayMainMenu();
         do
         {
             printf("Please select an option (1-7): ");

@@ -35,7 +35,7 @@ int main() {
 
     while(1){
 
-        displayMainMenu();
+
         getUserInputFromMainMenu();
     }
 
