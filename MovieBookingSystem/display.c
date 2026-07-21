@@ -51,6 +51,7 @@ int searchByNumber(char seatRow, int seatColumn);
 int searchByName(char searchName[]);
 bool validSeat(char seatRow,int seatCol);
 
+void viewRevenueReport();
 
 
 //Printing the option menu
@@ -113,7 +114,7 @@ void getUserInputFromMainMenu(){
                 searchOption();
                 break;
             case 6:
-                //TO-DO later
+                viewRevenueReport();
                 break;
             case 7:
                 printf("----------------------------------------\n");
