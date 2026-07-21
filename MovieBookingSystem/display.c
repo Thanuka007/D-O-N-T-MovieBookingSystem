@@ -132,7 +132,9 @@ int getUserInputFromMainMenu(){
                 return 0;
         }
         return PostActionMenu();
+
     }while(UserOption !=7);
+
 }
 
 
@@ -474,21 +476,39 @@ void getCustomerMovieToCancelBooking(){
 void viewSeatMap(int movieIndex, int showtimeIndex)
 {
     printf("\n");
-    printf("Movie    : %s\n",movies[movieIndex][showtimeIndex].movieTitle);
-    printf("Showtime : %s\n\n",movies[movieIndex][showtimeIndex].showTime);
+    printf("Movie    : %s\n", movies[movieIndex][showtimeIndex].movieTitle);
+    printf("Showtime : %s\n\n", movies[movieIndex][showtimeIndex].showTime);
 
-    printf("      ");
-    for (int col = 0;col<COLS;col++)
+    // Column header - 13 spaces to line up with the row label column below
+    printf("             ");
+    for (int col = 0; col < COLS; col++)
     {
-        printf("%-6d",col + 1);
+        printf("%-6d", col + 1);
     }
     printf("\n\n");
 
-    for (int row = 0;row<ROWS;row++)
+    for (int row = 0; row < ROWS; row++)
     {
-        printf(" %c    ", 'A' + row);
+        const char *tier;
 
-        for (int col = 0;col < COLS; col++)
+        if (row < 2)
+        {
+            tier = "Regular";
+        }
+        else if (row < 4)
+        {
+            tier = "Premium";
+        }
+        else
+        {
+            tier = "VIP";
+        }
+
+        char rowLabel[15];
+        sprintf(rowLabel, "%c (%s)", 'A' + row, tier);
+        printf("%-13s", rowLabel);
+
+        for (int col = 0; col < COLS; col++)
         {
             if (movies[movieIndex][showtimeIndex].seats[row][col].booked)
             {
@@ -504,8 +524,8 @@ void viewSeatMap(int movieIndex, int showtimeIndex)
     }
 
     printf("                [.] = Available   [X] = Booked    \n");
+    printf("        Regular = Rs. 500   Premium = Rs. 750   VIP = Rs. 1000\n");
 }
-
 
 // booking function
 void bookSeatUI(int movieIndex, int showtimeIndex)
