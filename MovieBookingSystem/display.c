@@ -98,24 +98,30 @@ int getUserInputFromMainMenu(){
 
         switch(UserOption){
             case 1:
+                clearScreen();
                 viewShowtimes(movies);
                 break;
             case 2:
+                clearScreen();
                 viewShowtimes(movies);
                 getCustomerMovieToViewSeatMap();
                 break;
             case 3:
+                clearScreen();
                 viewShowtimes(movies);
                 getCustomerMovieToBookSeat();
                 break;
             case 4:
+                clearScreen();
                 viewShowtimes(movies);
                 getCustomerMovieToCancelBooking();
                 break;
             case 5:
+                clearScreen();
                 searchOption();
                 break;
             case 6:
+                clearScreen();
                 viewRevenueReport();
                 break;
             case 7:
