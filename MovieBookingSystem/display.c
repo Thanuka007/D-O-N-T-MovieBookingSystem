@@ -43,12 +43,17 @@ bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBookingUI(int movieIndex, int showtimeIndex);
 int ValidateMainMenu(int option);
+
 void searchByNumberUI();
 void searchByNameUI();
 void searchOption();
 int searchByNumber(char seatRow, int seatColumn);
 int searchByName(char searchName[]);
 bool validSeat(char seatRow,int seatCol);
+
+void searchByName(char name[]);
+void searchByNumber(char seatRow, int seatColumn);
+void viewRevenueReport();
 
 //Printing the option menu
 void displayMainMenu(){
@@ -90,8 +95,35 @@ void getUserInputFromMainMenu(){
 
         }while(UserOption<1 || UserOption>7);
 
-
-        switch(UserOption){
+switch(UserOption){
+        case 1:
+            //viewShowtimes(movies);
+            break;
+        case 2:
+            //viewShowtimes(movies);
+            //getCustomerMovie();
+            break;
+        case 3:
+            //viewShowtimes(movies);
+            //getCustomerMovie();
+            //bookSeat();
+            break;
+        case 4:
+            //Cancel booking()
+            break;
+        case 5:
+            //searchOption()
+            break;
+        case 6:
+            viewRevenueReport();
+            break;
+        case 7:
+            printf("----------------------------------------\n");
+            printf("        Lights Camera Goodbye!     \n");
+            printf("----------------------------------------\n");
+            printf(" Thanks for choosing our booking system.\n");
+            printf("----------------------------------------\n");
+            return;
 
             case 1:
                 viewShowtimes(movies);
@@ -672,4 +704,44 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
 }
 
 
+
+
+//Revenue Report
+
+
+// Revenue Report - shows tickets sold and revenue per showtime, plus totals
+void viewRevenueReport()
+{
+    float totalRevenue = 0.0;
+    int totalTicketsSold = 0;
+
+    printf("\n=====================================================================================\n");
+    printf("                              REVENUE REPORT                                           \n");
+    printf("=====================================================================================\n");
+    printf("%-4s %-30s %-22s %-12s %-12s\n", "No.", "Movie Title", "Show Time", "Tickets", "Revenue");
+    printf("=====================================================================================\n");
+
+    int no = 1;
+
+    for (int i = 0; i < MOVIES; i++)
+    {
+        for (int j = 0; j < SHOWTIMES; j++)
+        {
+            printf("%-4d %-30s %-22s %-12d Rs. %-8.2f\n",
+                   no++,
+                   movies[i][j].movieTitle,
+                   movies[i][j].showTime,
+                   movies[i][j].ticketsSold,
+                   movies[i][j].revenue);
+
+            totalTicketsSold += movies[i][j].ticketsSold;
+            totalRevenue += movies[i][j].revenue;
+        }
+    }
+
+    printf("=====================================================================================\n");
+    printf("%-4s %-30s %-22s %-12d Rs. %-8.2f\n",
+           "", "TOTAL", "", totalTicketsSold, totalRevenue);
+    printf("=====================================================================================\n");
+}
 
