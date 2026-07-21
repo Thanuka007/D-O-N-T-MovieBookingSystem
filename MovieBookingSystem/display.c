@@ -51,9 +51,7 @@ int searchByNumber(char seatRow, int seatColumn);
 int searchByName(char searchName[]);
 bool validSeat(char seatRow,int seatCol);
 
-void searchByName(char name[]);
-void searchByNumber(char seatRow, int seatColumn);
-void viewRevenueReport();
+
 
 //Printing the option menu
 void displayMainMenu(){
@@ -95,36 +93,7 @@ void getUserInputFromMainMenu(){
 
         }while(UserOption<1 || UserOption>7);
 
-switch(UserOption){
-        case 1:
-            //viewShowtimes(movies);
-            break;
-        case 2:
-            //viewShowtimes(movies);
-            //getCustomerMovie();
-            break;
-        case 3:
-            //viewShowtimes(movies);
-            //getCustomerMovie();
-            //bookSeat();
-            break;
-        case 4:
-            //Cancel booking()
-            break;
-        case 5:
-            //searchOption()
-            break;
-        case 6:
-            viewRevenueReport();
-            break;
-        case 7:
-            printf("----------------------------------------\n");
-            printf("        Lights Camera Goodbye!     \n");
-            printf("----------------------------------------\n");
-            printf(" Thanks for choosing our booking system.\n");
-            printf("----------------------------------------\n");
-            return;
-
+        switch(UserOption){
             case 1:
                 viewShowtimes(movies);
                 break;
