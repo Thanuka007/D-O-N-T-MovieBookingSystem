@@ -136,6 +136,7 @@ int getUserInputFromMainMenu(){
 
 //Searching by name or row/col
 void searchOption(){
+
     int userChoice = 0;
     printf("------------------------------------\n");
     printf("         Search  booking            \n");
@@ -757,6 +758,7 @@ int PostActionMenu()
         }
 
     } while (choice != 1 && choice != 2);
+    clearScreen();
 
     return (choice == 1) ? 1 : 0;
 }
