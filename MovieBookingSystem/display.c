@@ -43,14 +43,12 @@ void removeDataFromArray(int movieIndex,int showtimeIndex,int row,int col);
 bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBookingUI(int movieIndex, int showtimeIndex);
-int ValidateMainMenu(int option);
 void clearScreen();
 void searchByNumberUI();
 void searchByNameUI();
 void searchOption();
 int searchByNumber(char seatRow, int seatColumn);
 int searchByName(char searchName[]);
-bool validSeat(char seatRow,int seatCol);
 void exitProgram();
 void viewRevenueReport();
 int PostActionMenu();
@@ -243,7 +241,8 @@ void printSearchedBookings(char movieTitle[50], char showTime[20], char customer
     printf("Showtime  : %s\n", showTime);
     printf("Customer  : %s\n", customerName);
     printf("Seat      : %c%d\n", seatRow, seatColumn);
-    printf("Price Paid: Rs. %.2f\n\n", pricePaid);
+    printf("Price Paid: Rs. %.2f\n", pricePaid);
+    printf("---------------------------------\n\n");
 }
 
 //Showing the movie details table
@@ -626,7 +625,7 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
 
 
         // Check seat availability
-        if (isSeatAvailable(movieIndex, showtimeIndex, row, col))
+        if (!isSeatAvailable(movieIndex, showtimeIndex, row, col))
         {
             printf("Sorry, Seat %c%d is already booked. Please pick another.\n", seatRow, seatCol);
             i--;
@@ -681,9 +680,7 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
     }while(seatCol<1 || seatCol>10);
 
 
-    if (!validSeat(seatRow, seatCol))
-    {
-            int row = seatRow - 'A';
+    int row = seatRow - 'A';
     int col = seatCol - 1;
 
 
@@ -696,7 +693,6 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
         removeDataFromArray(movieIndex,showtimeIndex,row,col);
 
         printf("\nBooking for seat %c%d has been cancelled successfully!\n",seatRow, seatCol);
-    }
     }
 
 }
@@ -772,15 +768,19 @@ int PostActionMenu()
         printf("    2. Exit\n");
         printf("-----------------------------------\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
 
-        if (choice != 1 && choice != 2)
+        if(scanf("%d",&choice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            choice=0;
+        }
+        else if (choice != 1 && choice != 2)
         {
             printf("Invalid input. Please enter 1 or 2.\n");
         }
 
-    } while (choice != 1 && choice != 2);
+    }while(choice<1 || choice>2);
     clearScreen();
-
     return (choice == 1) ? 1 : 0;
 }
