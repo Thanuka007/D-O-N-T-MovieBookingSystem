@@ -37,6 +37,7 @@ void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeInd
 int ValidateMainMenu(int option);
 void searchByName(char name[]);
 void searchByNumber(char seatRow, int seatColumn);
+void viewRevenueReport();
 
 
 //Printing the option menu
@@ -93,7 +94,7 @@ void GetUserInput(){
             //searchOption()
             break;
         case 6:
-            //TO-DO later
+            viewRevenueReport();
             break;
         case 7:
             printf("----------------------------------------\n");
@@ -390,4 +391,44 @@ void cancelBooking(char seatRow, int seatColumn, int movieIndex, int showtimeInd
 }
 
 
+
+
+//Revenue Report
+
+
+// Revenue Report - shows tickets sold and revenue per showtime, plus totals
+void viewRevenueReport()
+{
+    float totalRevenue = 0.0;
+    int totalTicketsSold = 0;
+
+    printf("\n=====================================================================================\n");
+    printf("                              REVENUE REPORT                                           \n");
+    printf("=====================================================================================\n");
+    printf("%-4s %-30s %-22s %-12s %-12s\n", "No.", "Movie Title", "Show Time", "Tickets", "Revenue");
+    printf("=====================================================================================\n");
+
+    int no = 1;
+
+    for (int i = 0; i < MOVIES; i++)
+    {
+        for (int j = 0; j < SHOWTIMES; j++)
+        {
+            printf("%-4d %-30s %-22s %-12d Rs. %-8.2f\n",
+                   no++,
+                   movies[i][j].movieTitle,
+                   movies[i][j].showTime,
+                   movies[i][j].ticketsSold,
+                   movies[i][j].revenue);
+
+            totalTicketsSold += movies[i][j].ticketsSold;
+            totalRevenue += movies[i][j].revenue;
+        }
+    }
+
+    printf("=====================================================================================\n");
+    printf("%-4s %-30s %-22s %-12d Rs. %-8.2f\n",
+           "", "TOTAL", "", totalTicketsSold, totalRevenue);
+    printf("=====================================================================================\n");
+}
 
