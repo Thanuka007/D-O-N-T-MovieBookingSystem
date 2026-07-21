@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define MOVIES 5
 #define SHOWTIMES 2
@@ -43,14 +44,14 @@ bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBookingUI(int movieIndex, int showtimeIndex);
 int ValidateMainMenu(int option);
-
+void clearScreen();
 void searchByNumberUI();
 void searchByNameUI();
 void searchOption();
 int searchByNumber(char seatRow, int seatColumn);
 int searchByName(char searchName[]);
 bool validSeat(char seatRow,int seatCol);
-
+void exitProgram();
 void viewRevenueReport();
 
 
@@ -117,12 +118,8 @@ void getUserInputFromMainMenu(){
                 viewRevenueReport();
                 break;
             case 7:
-                printf("----------------------------------------\n");
-                printf("        Lights Camera Goodbye!     \n");
-                printf("----------------------------------------\n");
-                printf(" Thanks for choosing our booking system.\n");
-                printf("----------------------------------------\n");
-                return;
+                clearScreen();
+                exitProgram();
 
         }
     }while(UserOption !=7);
@@ -715,3 +712,18 @@ void viewRevenueReport()
     printf("=====================================================================================\n");
 }
 
+void clearScreen()
+{
+    system("cls");
+}
+
+void exitProgram()
+{
+    printf("----------------------------------------\n");
+    printf("        Lights Camera Goodbye!     \n");
+    printf("----------------------------------------\n");
+    printf(" Thanks for choosing our booking system.\n");
+    printf("----------------------------------------\n");
+
+    exit(0);
+}
