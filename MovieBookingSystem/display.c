@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define MOVIES 5
 #define SHOWTIMES 2
@@ -30,7 +31,7 @@ typedef struct
 extern MovieShow movies[MOVIES][SHOWTIMES];
 
 void displayMainMenu();
-void getUserInputFromMainMenu();
+int getUserInputFromMainMenu();
 void viewShowtimes(MovieShow movies[MOVIES][SHOWTIMES]);
 void getCustomerMovieToViewSeatMap();
 void getCustomerMovieToBookSeat();
@@ -42,18 +43,16 @@ void removeDataFromArray(int movieIndex,int showtimeIndex,int row,int col);
 bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col);
 void viewSeatMap(int movieIndex, int showtimeIndex);
 void cancelBookingUI(int movieIndex, int showtimeIndex);
-int ValidateMainMenu(int option);
-
+void clearScreen();
 void searchByNumberUI();
 void searchByNameUI();
 void searchOption();
 int searchByNumber(char seatRow, int seatColumn);
 int searchByName(char searchName[]);
-bool validSeat(char seatRow,int seatCol);
-
-void searchByName(char name[]);
-void searchByNumber(char seatRow, int seatColumn);
+void exitProgram();
 void viewRevenueReport();
+int PostActionMenu();
+
 
 //Printing the option menu
 void displayMainMenu(){
@@ -74,10 +73,12 @@ void displayMainMenu(){
 
 
 //Asking for user input
-void getUserInputFromMainMenu(){
+int getUserInputFromMainMenu(){
+
     int UserOption= 0;
 
     do{
+            displayMainMenu();
         do
         {
             printf("Please select an option (1-7): ");
@@ -95,72 +96,49 @@ void getUserInputFromMainMenu(){
 
         }while(UserOption<1 || UserOption>7);
 
-switch(UserOption){
-        case 1:
-            //viewShowtimes(movies);
-            break;
-        case 2:
-            //viewShowtimes(movies);
-            //getCustomerMovie();
-            break;
-        case 3:
-            //viewShowtimes(movies);
-            //getCustomerMovie();
-            //bookSeat();
-            break;
-        case 4:
-            //Cancel booking()
-            break;
-        case 5:
-            //searchOption()
-            break;
-        case 6:
-            viewRevenueReport();
-            break;
-        case 7:
-            printf("----------------------------------------\n");
-            printf("        Lights Camera Goodbye!     \n");
-            printf("----------------------------------------\n");
-            printf(" Thanks for choosing our booking system.\n");
-            printf("----------------------------------------\n");
-            return;
-
+        switch(UserOption){
             case 1:
+                clearScreen();
                 viewShowtimes(movies);
                 break;
             case 2:
+                clearScreen();
                 viewShowtimes(movies);
                 getCustomerMovieToViewSeatMap();
                 break;
             case 3:
+                clearScreen();
                 viewShowtimes(movies);
                 getCustomerMovieToBookSeat();
                 break;
             case 4:
+                clearScreen();
                 viewShowtimes(movies);
                 getCustomerMovieToCancelBooking();
                 break;
             case 5:
+                clearScreen();
                 searchOption();
                 break;
             case 6:
-                //TO-DO later
+                clearScreen();
+                viewRevenueReport();
                 break;
             case 7:
-                printf("----------------------------------------\n");
-                printf("        Lights Camera Goodbye!     \n");
-                printf("----------------------------------------\n");
-                printf(" Thanks for choosing our booking system.\n");
-                printf("----------------------------------------\n");
-                return;
-
+                clearScreen();
+                exitProgram();
+                return 0;
         }
+        return PostActionMenu();
+
     }while(UserOption !=7);
+
 }
 
 
 //Searching by name or row/col
 void searchOption(){
+
     int userChoice = 0;
     printf("------------------------------------\n");
     printf("         Search  booking            \n");
@@ -263,7 +241,8 @@ void printSearchedBookings(char movieTitle[50], char showTime[20], char customer
     printf("Showtime  : %s\n", showTime);
     printf("Customer  : %s\n", customerName);
     printf("Seat      : %c%d\n", seatRow, seatColumn);
-    printf("Price Paid: Rs. %.2f\n\n", pricePaid);
+    printf("Price Paid: Rs. %.2f\n", pricePaid);
+    printf("---------------------------------\n\n");
 }
 
 //Showing the movie details table
@@ -496,21 +475,39 @@ void getCustomerMovieToCancelBooking(){
 void viewSeatMap(int movieIndex, int showtimeIndex)
 {
     printf("\n");
-    printf("Movie    : %s\n",movies[movieIndex][showtimeIndex].movieTitle);
-    printf("Showtime : %s\n\n",movies[movieIndex][showtimeIndex].showTime);
+    printf("Movie    : %s\n", movies[movieIndex][showtimeIndex].movieTitle);
+    printf("Showtime : %s\n\n", movies[movieIndex][showtimeIndex].showTime);
 
-    printf("      ");
-    for (int col = 0;col<COLS;col++)
+    // Column header - 13 spaces to line up with the row label column below
+    printf("             ");
+    for (int col = 0; col < COLS; col++)
     {
-        printf("%-6d",col + 1);
+        printf("%-6d", col + 1);
     }
     printf("\n\n");
 
-    for (int row = 0;row<ROWS;row++)
+    for (int row = 0; row < ROWS; row++)
     {
-        printf(" %c    ", 'A' + row);
+        const char *tier;
 
-        for (int col = 0;col < COLS; col++)
+        if (row < 2)
+        {
+            tier = "Regular";
+        }
+        else if (row < 4)
+        {
+            tier = "Premium";
+        }
+        else
+        {
+            tier = "VIP";
+        }
+
+        char rowLabel[15];
+        sprintf(rowLabel, "%c (%s)", 'A' + row, tier);
+        printf("%-13s", rowLabel);
+
+        for (int col = 0; col < COLS; col++)
         {
             if (movies[movieIndex][showtimeIndex].seats[row][col].booked)
             {
@@ -526,8 +523,8 @@ void viewSeatMap(int movieIndex, int showtimeIndex)
     }
 
     printf("                [.] = Available   [X] = Booked    \n");
+    printf("        Regular = Rs. 500   Premium = Rs. 750   VIP = Rs. 1000\n");
 }
-
 
 // booking function
 void bookSeatUI(int movieIndex, int showtimeIndex)
@@ -538,25 +535,40 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
     int isSenior = 0;
     int discountChoice = 0;
 
+    int availableSeats = (ROWS * COLS) - movies[movieIndex][showtimeIndex].ticketsSold;
+
+    if (availableSeats == 0)
+    {
+        printf("\nSorry! This show is fully booked.\n");
+        return;
+    }
+
     printf("Enter your name: ");
     scanf(" %49[^\n]", userName);
 
+
     do
     {
-        printf("How many seats do you want to book?");
-        //need to check seat avilability from backend.
+
+        printf("How many seats do you want to book (%d Seats Available) ? ",availableSeats);
+
         if(scanf("%d",&seatcount)!=1)
         {
             printf("Invalid input!\n");
             while(getchar()!='\n');
-            seatcount=0;
+            seatcount = 0;
         }
-        else if(seatcount<1)
+        else if(seatcount < 1)
         {
             printf("You must book at least one seat.\n");
         }
+        else if(seatcount > availableSeats)
+        {
+            printf("Only %d seat(s) are available for this show.\n", availableSeats);
+            seatcount = 0;
+        }
 
-    }while(seatcount<1);
+    } while(seatcount < 1);
 
     //discount UI
 
@@ -628,7 +640,7 @@ void bookSeatUI(int movieIndex, int showtimeIndex)
 
 
         // Check seat availability
-        if (isSeatAvailable(movieIndex, showtimeIndex, row, col))
+        if (!isSeatAvailable(movieIndex, showtimeIndex, row, col))
         {
             printf("Sorry, Seat %c%d is already booked. Please pick another.\n", seatRow, seatCol);
             i--;
@@ -683,9 +695,7 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
     }while(seatCol<1 || seatCol>10);
 
 
-    if (!validSeat(seatRow, seatCol))
-    {
-            int row = seatRow - 'A';
+    int row = seatRow - 'A';
     int col = seatCol - 1;
 
 
@@ -698,7 +708,6 @@ void cancelBookingUI(int movieIndex, int showtimeIndex)
         removeDataFromArray(movieIndex,showtimeIndex,row,col);
 
         printf("\nBooking for seat %c%d has been cancelled successfully!\n",seatRow, seatCol);
-    }
     }
 
 }
@@ -745,3 +754,48 @@ void viewRevenueReport()
     printf("=====================================================================================\n");
 }
 
+void clearScreen()
+{
+    system("cls");
+}
+
+void exitProgram()
+{
+    printf("----------------------------------------\n");
+    printf("        Lights Camera Goodbye!     \n");
+    printf("----------------------------------------\n");
+    printf(" Thanks for choosing our booking system.\n");
+    printf("----------------------------------------\n");
+
+    exit(0);
+}
+
+
+//Post action menu
+int PostActionMenu()
+{
+    int choice;
+
+    do
+    {
+        printf("\n-----------------------------------\n");
+        printf("    1. Back to Main Menu\n");
+        printf("    2. Exit\n");
+        printf("-----------------------------------\n");
+        printf("Enter your choice: ");
+
+        if(scanf("%d",&choice)!=1)
+        {
+            printf("Invalid input!\n");
+            while(getchar()!='\n');
+            choice=0;
+        }
+        else if (choice != 1 && choice != 2)
+        {
+            printf("Invalid input. Please enter 1 or 2.\n");
+        }
+
+    }while(choice<1 || choice>2);
+    clearScreen();
+    return (choice == 1) ? 1 : 0;
+}

@@ -24,8 +24,8 @@ MovieShow movies[MOVIES][SHOWTIMES];
 
 
 void initializeDataToMoviesArray();
-void displayMainMenu();
-void getUserInputFromMainMenu();
+int getUserInputFromMainMenu();
+
 
 
 int main() {
@@ -34,7 +34,7 @@ int main() {
 
     while(1){
 
-        displayMainMenu();
+
         getUserInputFromMainMenu();
     }
 

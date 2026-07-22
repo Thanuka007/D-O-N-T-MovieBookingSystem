@@ -35,7 +35,7 @@ char getSeatRowChar(int rowNumber);
 
 bool isSeatAvailable(int movieIndex,int showtimeIndex,int row,int col)
 {
-    return movies[movieIndex][showtimeIndex].seats[row][col].booked == 1;
+    return movies[movieIndex][showtimeIndex].seats[row][col].booked == 0;
 }
 
 void addDataToArray(int movieIndex,int showtimeIndex,int row,int col, char userName[50], float finalPrice)
