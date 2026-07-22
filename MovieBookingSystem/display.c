@@ -794,6 +794,11 @@ int PostActionMenu()
         {
             printf("Invalid input. Please enter 1 or 2.\n");
         }
+        else if(choice == 2)
+        {
+            clearScreen();
+            exitProgram();
+        }
 
     }while(choice<1 || choice>2);
     clearScreen();
