@@ -171,6 +171,6 @@ The system keeps track of:
 
 ## Authors
 - [Omira Karannagoda](https://github.com/omiragk05)
-- [Dinuka Gunawardhane](https://github.com/senathx-web)
-- [Thanuka Gunawardhane](https://github.com/Thanuka007)
+- [Dinuka Gunawardana](https://github.com/senathx-web)
+- [Thanuka Gunawardhana](https://github.com/Thanuka007)
 - [Nisandi Kumarage](https://github.com/nishukumarage2025-droid)
